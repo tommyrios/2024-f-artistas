@@ -17,6 +17,9 @@ calamardo = UnArtista "Andres Calamardo" ["Flaca", "Sin Documentos", "Tuyo siemp
 paty :: Artista
 paty = UnArtista "Taylor Paty" ["Shake It Off", "Lover"]
 
+drAlvarez :: Artista
+drAlvarez = UnArtista "Pitu Alvarez" ["Todo sigue igual", "Me gustas mucho", "Que vas a hacer tan sola hoy?"]
+
 --punto 1
 
 calificacion :: Cancion -> Number
@@ -24,11 +27,11 @@ calificacion = (+ 10) . length  . filter (`elem` ['a'..'z'])
 
 --punto 2
 
-cancionBuena :: Cancion -> Bool
-cancionBuena = (>20) . calificacion
+buenaCalificacion :: Cancion -> Bool
+buenaCalificacion = (>20) . calificacion
 
 cancionesBuenas :: Artista -> [Cancion]
-cancionesBuenas artista = filter cancionBuena (canciones artista)
+cancionesBuenas artista = filter buenaCalificacion (canciones artista)
 
 esExitoso :: Artista -> Bool
 esExitoso artista = (> 50) . sum . map calificacion $ cancionesBuenas artista
@@ -36,7 +39,7 @@ esExitoso artista = (> 50) . sum . map calificacion $ cancionesBuenas artista
 --punto 3
 
 grupo :: [Artista]
-grupo = [fitito, calamardo, paty]
+grupo = [fitito, calamardo, paty, drAlvarez]
 
 artistasExitosos :: [Artista] -> [Artista]
 artistasExitosos = filter esExitoso
@@ -44,8 +47,6 @@ artistasExitosos = filter esExitoso
 --punto 4
 
 todoJunto :: [Artista] -> [Artista]
-todoJunto artistas = filter (\artista -> sum (map (\cancion -> (>20) ((length . filter (`elem` ['a'..'z'])) cancion + 10)) (canciones artista)) > 50) artistas
+todoJunto = filter ((> 50) . sum . map ((+ 10) . length . filter (`elem` ['a'..'z'])) . filter ((> 20) . ((+ 10) . length . filter (`elem` ['a'..'z']))) . canciones)
 
 
-
---
