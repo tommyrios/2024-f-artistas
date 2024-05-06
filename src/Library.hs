@@ -20,6 +20,7 @@ paty = UnArtista "Taylor Paty" ["Shake It Off", "Lover"]
 drAlvarez :: Artista
 drAlvarez = UnArtista "Pitu Alvarez" ["Todo sigue igual", "Me gustas mucho", "Que vas a hacer tan sola hoy?"]
 
+
 --punto 1
 
 calificacion :: Cancion -> Number
@@ -47,6 +48,4 @@ artistasExitosos = filter esExitoso
 --punto 4
 
 todoJunto :: [Artista] -> [Artista]
-todoJunto = filter ((> 50) . sum . map ((+ 10) . length . filter (`elem` ['a'..'z'])) . filter ((> 20) . ((+ 10) . length . filter (`elem` ['a'..'z']))) . canciones)
-
-
+todoJunto = filter (\artista -> (>50) . sum . filter (>20) . map ((+10) . length . filter (`elem` ['a'..'z'])) . canciones $ artista)
